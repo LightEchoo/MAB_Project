@@ -4,61 +4,65 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5aa3e3f6-0354-4059-85bb-cd5af9869e37" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codes.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codes.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EXP4/AR_model.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/AR_model.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EXP4/AR_test1.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/AR_test1.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EXP4/EXP4 OOP test1.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/EXP4 OOP test1.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EXP4/GNN_test.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/GNN_test.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EXP4/GNN_test_1.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/GNN_test_1.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EXP4/GNN_test_2.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/GNN_test_2.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EXP4/INFO_DENSITY_test.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/INFO_DENSITY_test.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EXP4/LSTM_test.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/LSTM_test.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EXP4/LSTM_test1.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/LSTM_test1.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EXP4/LSTM_test_2.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/LSTM_test_2.ipynb" afterDir="false" />
+    <list default="true" id="5aa3e3f6-0354-4059-85bb-cd5af9869e37" name="更改" comment="gitignore">
+      <change afterPath="$PROJECT_DIR$/.idea/jupyter-settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/EXP4/Config-Data.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/EXP4/Data-Generate.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EXP4/data_generate.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/data_generate.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EXP4/experiment_log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/experiment_log.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EXP4/load_ar1_data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/load_ar1_data.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EXP4/load_iid_data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/load_iid_data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Week 3/AR(1)_ Variance_ larger_ Theta_ 0.5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/EXP4/包依赖测试.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/包依赖测试.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Jupyter Notebook" />
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 1
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="2kUXm9JgGlQ0SjWa1UarEhVGe1z" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "正在变基 main",
-    "last_opened_file_path": "E:/Study in the UK/Project/codes/EXP4",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/Study in the UK/Project/codes/EXP4&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.notebooks.jupyter.connections.configuration.JupyterServerConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="PyConsoleOptionsProvider">
+    <option name="myPythonConsoleState">
+      <console-settings>
+        <option name="useSoftWraps" value="true" />
+      </console-settings>
+    </option>
+  </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="E:\Study in the UK\Project\codes\EXP4" />
@@ -66,6 +70,30 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\Study in the UK\Project\codes\EXP4" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Config_Data" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="codes" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/EXP4" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="E:\Study in the UK\Project\codes\EXP4\Config_Data.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -99,5 +127,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="gitignore" />
+    <option name="LAST_COMMIT_MESSAGE" value="gitignore" />
   </component>
 </project>
