@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="5aa3e3f6-0354-4059-85bb-cd5af9869e37" name="更改" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codes.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codes.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EXP4/AR_model.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/AR_model.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EXP4/AR_test1.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/AR_test1.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EXP4/EXP4 OOP test1.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/EXP4 OOP test1.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EXP4/GNN_test.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/GNN_test.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EXP4/GNN_test_1.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/GNN_test_1.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EXP4/GNN_test_2.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/GNN_test_2.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EXP4/INFO_DENSITY_test.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/INFO_DENSITY_test.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EXP4/LSTM_test.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/LSTM_test.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EXP4/LSTM_test1.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/LSTM_test1.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EXP4/LSTM_test_2.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/LSTM_test_2.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EXP4/data_generate.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/data_generate.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EXP4/experiment_log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/experiment_log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EXP4/load_ar1_data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/load_ar1_data.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EXP4/load_iid_data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/load_iid_data.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Week 3/AR(1)_ Variance_ larger_ Theta_ 0.5.png" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 1
+}]]></component>
+  <component name="ProjectId" id="2kUXm9JgGlQ0SjWa1UarEhVGe1z" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "正在变基 main",
+    "last_opened_file_path": "E:/Study in the UK/Project/codes/EXP4",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Study in the UK\Project\codes\EXP4" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\Study in the UK\Project\codes\EXP4" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-df623cec81eb-c6172f9078bd-com.jetbrains.pycharm.ds.sharedIndexes.bundled-DS-233.15026.16" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="默认任务">
+      <changelist id="5aa3e3f6-0354-4059-85bb-cd5af9869e37" name="更改" comment="" />
+      <created>1723339284318</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1723339284318</updated>
+      <workItem from="1723339286211" duration="320000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
