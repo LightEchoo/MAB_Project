@@ -1,10 +1,12 @@
 from dataclasses import dataclass, field
+
+import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 import torch
 from torch.utils.data import DataLoader, TensorDataset
-import pandas as pd
-import matplotlib.pyplot as plt
-import matplotlib
+
+
 @dataclass
 class DataGenerateConfig:
     mean_load: float = 50.0  # Mean load of nodes' load
@@ -25,9 +27,10 @@ class LSTMConfig:
 
 
 @dataclass
-class GNNConfig:
-    # Add relevant fields if necessary
-    pass
+class GATConfig:
+    # 图卷积网络的配置，默认设置为全连接图
+    num_heads: int = 8  # Number of attention heads
+    num_layers: int = 3  # Number of GAT layers
 
 
 @dataclass
@@ -44,26 +47,31 @@ class Config:
     learning_rate: float = 0.001  # Learning rate
     num_epochs: int = 100  # Number of epochs
     num_workers: int = 24  # Number of workers for DataLoader
+    device: str = 'cuda'  # Device
     mix_precision: bool = True  # Mixed precision training
-    device: str = 'cuda' if torch.cuda.is_available() else 'cpu'  # Device
+
+    # TODO: 早停的参数 patience=5, min_delta=1e-4
+    # TODO: 调度器的参数
 
     # 使用 default_factory 来实例化复杂类型
     dg_config: DataGenerateConfig = field(default_factory=DataGenerateConfig)
     ar_config: ARConfig = field(default_factory=ARConfig)
     lstm_config: LSTMConfig = field(default_factory=LSTMConfig)
-    gnn_config: GNNConfig = field(default_factory=GNNConfig)
+    gat_config: GATConfig = field(default_factory=GATConfig)
 
     def print_config_info(self):
         print("Config settings:")
         self._recursive_print(vars(self))
+        print("-" * 50)
 
     def _recursive_print(self, config_dict, indent=0):
         for key, value in config_dict.items():
-            if isinstance(value, (DataGenerateConfig, ARConfig, LSTMConfig, GNNConfig)):
+            if isinstance(value, (DataGenerateConfig, ARConfig, LSTMConfig, GATConfig)):
                 print(" " * indent + f"{key}:")
                 self._recursive_print(vars(value), indent + 4)
             else:
                 print(" " * indent + f"{key}: {value}")
+
 
 class DataGenerate:
     def __init__(self, config: Config):
@@ -77,6 +85,9 @@ class DataGenerate:
 
         self.print_data_generate_info()  # 打印信息
         self.plot_original_means()  # 绘制原始平均负载
+
+        self.edge_index = torch.tensor(np.array([(i, j) for i in range(self.config.N) for j in range(self.config.N)]).T,
+                                       dtype=torch.long)  # 默认全连接图
 
     def plot_original_means(self):
         plt.figure(figsize=(12, 6))
@@ -106,7 +117,7 @@ class DataGenerate:
             ar1[0] = mean_node
             for t in range(1, self.config.T_train_val + self.config.T_test):
                 ar1[t] = self.config.dg_config.theta * ar1[t - 1] + (
-                            1 - self.config.dg_config.theta) * mean_node + np.random.normal(0, 1)
+                        1 - self.config.dg_config.theta) * mean_node + np.random.normal(0, 1)
             return ar1
 
         for i in range(self.config.N):
@@ -124,6 +135,7 @@ class DataGenerate:
         print('mean_iid:', self.mean_iid.shape)
         print('load_ar1:', self.load_ar1.shape)
         print('mean_ar1:', self.mean_ar1.shape)
+        print('edge_index:', self.edge_index.shape)
 
 
 class DataManage:
@@ -151,6 +163,9 @@ class DataManage:
         self.print_data_manage_info()  # 打印信息
         self.print_dataloader_info()  # 打印dataloader信息
 
+        self.train_val_data = torch.tensor(self.train_val_data, device=self.config.device, dtype=torch.float32)
+        self.test_data = torch.tensor(self.test_data, device=self.config.device, dtype=torch.float32)
+
     def _create_sequences(self):
         train_sets = []
         val_sets = []
@@ -163,16 +178,40 @@ class DataManage:
             val_sets.append(val)
         return torch.tensor(np.array(train_sets)), torch.tensor(np.array(val_sets))
 
+    # 绘制指定范围内的数据
+    def plot_range_data(self, data, start, end, title='Load Data'):
+        time_steps = np.arange(start, end)
+
+        plt.figure(figsize=(12, 6))
+        for i in range(data.shape[0]):
+            plt.plot(time_steps, data[i, start:end], label=f'Node {i}')
+        plt.title(f'{title} - Nodes {0}-{data.shape[0]}')
+        plt.xlabel('Time')
+        plt.ylabel('Load')
+        plt.legend()
+        plt.grid(True)
+
+        # Adjust layout
+        plt.tight_layout()
+        plt.show()
+
     def print_data_manage_info(self):
-        print('load_iid:', self.load_iid.shape)
-        print('load_ar1:', self.load_ar1.shape)
-        print('data:', self.data.shape)
-        print('train_val_data:', self.train_val_data.shape)
-        print('test_data:', self.test_data.shape)
-        print('train_sets:', self.train_sets.shape)
-        print('val_sets:', self.val_sets.shape)
-        print('train_val_dataset:', len(self.train_val_dataset))
-        print('dataloader:', len(self.dataloader))
+        print('load_iid.shape:', self.load_iid.shape)
+        print('load_iid.type:', type(self.load_iid))
+        print('load_ar1.shape:', self.load_ar1.shape)
+        print('load_ar1.type:', type(self.load_ar1))
+        print('data.shape:', self.data.shape)
+        print('data.type:', type(self.data))
+        print('train_val_data.shape:', self.train_val_data.shape)
+        print('train_val_data.type:', type(self.train_val_data))
+        print('test_data.shape:', self.test_data.shape)
+        print('test_data.type:', type(self.test_data))
+        print('train_sets.shape:', self.train_sets.shape)
+        print('train_sets.type:', type(self.train_sets))
+        print('val_sets.shape:', self.val_sets.shape)
+        print('val_sets.type:', type(self.val_sets))
+        print('len(train_val_dataset):', len(self.train_val_dataset))
+        print('len(dataloader):', len(self.dataloader))
 
     def print_dataloader_info(self):
         for i, (train, val) in enumerate(self.dataloader):
@@ -182,6 +221,9 @@ class DataManage:
 
 if __name__ == '__main__':
     RE_GENERATE_DATA = False  # 是否重新生成数据
+
+    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    # device = 'cpu'
 
     # 默认配置
     config = Config(
@@ -197,13 +239,13 @@ if __name__ == '__main__':
         learning_rate=0.001,
         num_epochs=100,
         num_workers=24,
-        mix_precision=True,
-        device='cuda' if torch.cuda.is_available() else 'cpu',
+        device=device,
+        mix_precision=True if device == 'cuda' else False,
 
-        dg_config = DataGenerateConfig(mean_load=50.0, var_load=10.0, iid_var=1.0, theta=0.9),
-        ar_config = ARConfig(order=5),
-        lstm_config = LSTMConfig(hidden_size=50, num_layers=4),
-        gnn_config = GNNConfig(),
+        dg_config=DataGenerateConfig(mean_load=50.0, var_load=10.0, iid_var=1.0, theta=0.9),
+        ar_config=ARConfig(order=5),
+        lstm_config=LSTMConfig(hidden_size=50, num_layers=4),
+        gat_config=GATConfig(num_heads=8, num_layers=3),
     )
 
     config.print_config_info()
@@ -213,4 +255,4 @@ if __name__ == '__main__':
 
     data_manage = DataManage(config)
 
-#%%
+# %%

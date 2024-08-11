@@ -4,16 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5aa3e3f6-0354-4059-85bb-cd5af9869e37" name="更改" comment="gitignore">
-      <change afterPath="$PROJECT_DIR$/.idea/jupyter-settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EXP4/Config-Data.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EXP4/Data-Generate.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="5aa3e3f6-0354-4059-85bb-cd5af9869e37" name="更改" comment="Config-Data Model">
+      <change afterPath="$PROJECT_DIR$/EXP4/GNN_test_3.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EXP4/data_generate.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/data_generate.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EXP4/AR_model.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/AR_model.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EXP4/Config_Data.py" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/Config_Data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EXP4/LSTM_test.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/LSTM_test.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EXP4/LSTM_test1.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/LSTM_test1.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EXP4/LSTM_test_2.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/LSTM_test_2.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EXP4/load_ar1_data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/load_ar1_data.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EXP4/load_iid_data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/load_iid_data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EXP4/包依赖测试.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/包依赖测试.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,8 +23,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Jupyter Notebook" />
         <option value="Python Script" />
+        <option value="Jupyter Notebook" />
       </list>
     </option>
   </component>
@@ -130,6 +130,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="gitignore" />
-    <option name="LAST_COMMIT_MESSAGE" value="gitignore" />
+    <MESSAGE value="Config-Data Model" />
+    <option name="LAST_COMMIT_MESSAGE" value="Config-Data Model" />
   </component>
 </project>
