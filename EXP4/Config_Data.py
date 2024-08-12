@@ -22,16 +22,20 @@ class ARConfig:
 
 @dataclass
 class LSTMConfig:
-    hidden_size: int = 50  # Hidden size
+    hidden_size: int = 64  # Hidden size
     num_layers: int = 4  # Number of layers
 
 
 @dataclass
 class GATConfig:
-    # 图卷积网络的配置，默认设置为全连接图
+    hidden_size: int = 32  # Hidden size
     num_heads: int = 8  # Number of attention heads
-    num_layers: int = 3  # Number of GAT layers
+    num_gat_layers: int = 3  # Number of GAT layers
 
+@dataclass
+class GNNConfig:
+    hidden_size: int = 32
+    num_layers: int = 3
 
 @dataclass
 class Config:
@@ -50,14 +54,23 @@ class Config:
     device: str = 'cuda'  # Device
     mix_precision: bool = True  # Mixed precision training
 
-    # TODO: 早停的参数 patience=5, min_delta=1e-4
-    # TODO: 调度器的参数
+    # 早停的参数
+    patience_epochs: int=6  # 'patience_epochs' 个 epoch 没有提升，就停止训练
+    min_delta: float=1e-2  # 当监控指标的变化小于 min_delta 时，就视为没有提升
+
+    # 调度器的参数
+    mode: str='min'  # 'min' 表示监控指标的值越小越好，'max' 表示监控指标的值越大越好
+    factor: float=0.1  # 学习率调度器的缩放因子
+    patience_lr: int=2  # 'patience_lr' 个 epoch 没有提升，就缩放学习率
+    min_lr: float=1e-6  # 学习率的下限
+    threshold: float=1e-2  # 监控指标的变化小于 threshold 时，就视为没有提升
 
     # 使用 default_factory 来实例化复杂类型
     dg_config: DataGenerateConfig = field(default_factory=DataGenerateConfig)
     ar_config: ARConfig = field(default_factory=ARConfig)
     lstm_config: LSTMConfig = field(default_factory=LSTMConfig)
     gat_config: GATConfig = field(default_factory=GATConfig)
+    gnn_config: GNNConfig = field(default_factory=GNNConfig)
 
     def print_config_info(self):
         print("Config settings:")
@@ -85,9 +98,6 @@ class DataGenerate:
 
         self.print_data_generate_info()  # 打印信息
         self.plot_original_means()  # 绘制原始平均负载
-
-        self.edge_index = torch.tensor(np.array([(i, j) for i in range(self.config.N) for j in range(self.config.N)]).T,
-                                       dtype=torch.long)  # 默认全连接图
 
     def plot_original_means(self):
         plt.figure(figsize=(12, 6))
@@ -166,6 +176,9 @@ class DataManage:
         self.train_val_data = torch.tensor(self.train_val_data, device=self.config.device, dtype=torch.float32)
         self.test_data = torch.tensor(self.test_data, device=self.config.device, dtype=torch.float32)
 
+        self.edge_index = torch.tensor(np.array([(i, j) for i in range(self.config.N) for j in range(self.config.N)]).T,
+                                       dtype=torch.long)  # 默认全连接图
+
     def _create_sequences(self):
         train_sets = []
         val_sets = []
@@ -242,10 +255,21 @@ if __name__ == '__main__':
         device=device,
         mix_precision=True if device == 'cuda' else False,
 
+        patience_epochs=6,
+        min_delta=1e-2,
+
+        mode='min',
+        factor=0.1,
+        patience_lr=2,
+        min_lr=1e-6,
+        threshold=1e-2,
+
         dg_config=DataGenerateConfig(mean_load=50.0, var_load=10.0, iid_var=1.0, theta=0.9),
         ar_config=ARConfig(order=5),
-        lstm_config=LSTMConfig(hidden_size=50, num_layers=4),
-        gat_config=GATConfig(num_heads=8, num_layers=3),
+        lstm_config=LSTMConfig(hidden_size=64, num_layers=4),
+        gat_config=GATConfig(hidden_size=32, num_heads=8, num_gat_layers=3),
+        gnn_config=GNNConfig(hidden_size=32, num_layers=3)
+
     )
 
     config.print_config_info()

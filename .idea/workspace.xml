@@ -4,16 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5aa3e3f6-0354-4059-85bb-cd5af9869e37" name="更改" comment="Config-Data Model">
-      <change afterPath="$PROJECT_DIR$/EXP4/GNN_test_3.ipynb" afterDir="false" />
+    <list default="true" id="5aa3e3f6-0354-4059-85bb-cd5af9869e37" name="更改" comment="GNN -&gt; GAT&#10;merge GAT &amp; LSTM">
+      <change afterPath="$PROJECT_DIR$/EXP4/ModelExpert1.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/EXP4/merge_test.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EXP4/AR_model.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/AR_model.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EXP4/Config_Data.py" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/Config_Data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EXP4/LSTM_test.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/LSTM_test.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EXP4/LSTM_test1.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/LSTM_test1.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EXP4/LSTM_test_2.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/LSTM_test_2.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EXP4/load_ar1_data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/load_ar1_data.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EXP4/load_iid_data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/load_iid_data.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EXP4/GNN_test_2.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/GNN_test_2.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EXP4/GNN_test_3.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/ModelExpert.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EXP4/LSTM_test_2.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/LSTM_model.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +46,7 @@
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/Study in the UK/Project/codes/EXP4&quot;,
+    &quot;last_opened_file_path&quot;: &quot;F:/wwj/MScProject&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -131,6 +130,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="gitignore" />
     <MESSAGE value="Config-Data Model" />
-    <option name="LAST_COMMIT_MESSAGE" value="Config-Data Model" />
+    <MESSAGE value="GNN -&gt; GAT&#10;merge GAT &amp; LSTM" />
+    <option name="LAST_COMMIT_MESSAGE" value="GNN -&gt; GAT&#10;merge GAT &amp; LSTM" />
   </component>
 </project>
