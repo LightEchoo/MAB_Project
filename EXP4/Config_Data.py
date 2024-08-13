@@ -189,23 +189,25 @@ class TrainVaildManage:
         self.test_data_tensor = torch.tensor(self.test_data_np, device=self.config.device, dtype=torch.float32)
 
         # 创建训练集和验证集的序列数据，用于训练和验证
+        self.train_val_x, self.train_val_y = self._create_sequences(self.train_val_data_np)
         self.train_x, self.train_y = self._create_sequences(self.train_data_np)
         self.val_x, self.val_y = self._create_sequences(self.val_data_np)
 
         # 创建TensorDataset，用于创建DataLoader
+        self.train_val_dataset = TensorDataset(self.train_val_x, self.train_val_y)
         self.train_dataset = TensorDataset(self.train_x, self.train_y)
         self.val_dataset = TensorDataset(self.val_x, self.val_y)
 
         # 创建数据加载器
-        self.train_dataloader = DataLoader(self.train_dataset, batch_size=self.config.batch_size, shuffle=True,
-                                           num_workers=self.config.num_workers)
-        self.val_dataloader = DataLoader(self.val_dataset, batch_size=self.config.batch_size, shuffle=False,
-                                         num_workers=self.config.num_workers)
+        self.train_dataloader = DataLoader(self.train_dataset, batch_size=self.config.batch_size, shuffle=True, num_workers=self.config.num_workers)
+        self.val_dataloader = DataLoader(self.val_dataset, batch_size=self.config.batch_size, shuffle=False, num_workers=self.config.num_workers)
+        self.train_val_dataloader = DataLoader(self.train_val_dataset, batch_size=self.config.batch_size, shuffle=True, num_workers=self.config.num_workers)
 
         # 打印信息
         self.print_train_valid_info()
         self.print_dataloader_info(self.train_dataloader, title='Train')
         self.print_dataloader_info(self.val_dataloader, title='Valid')
+        self.print_dataloader_info(self.train_val_dataloader, title='Train and Valid')
 
         # 创建GNN的边索引
         self.edge_index_tensor = torch.tensor(
@@ -223,27 +225,37 @@ class TrainVaildManage:
         return torch.tensor(np.array(x)), torch.tensor(np.array(y))
 
     def print_train_valid_info(self):
-        print('-----------------Train and Valid Info-----------------')
+        print('-----------------Train and Valid Data Info-----------------')
         print('load_iid.shape:', self.load_iid.shape)
         print('load_ar1.shape:', self.load_ar1.shape)
+        print('data_type:', self.config.data_type)
         print('data_np.shape:', self.data_np.shape)
         print('data_tensor.shape:', self.data_tensor.shape)
+
         print('T:', self.T)
         print('T_train:', self.T_train)
         print('T_val:', self.T_val)
         print('train_ratio:', self.train_ratio)
         print('T_train_val:', self.T_train_val)
         print('T_test:', self.T_test)
+
+        print('train_val_data_np.shape:', self.train_val_data_np.shape)
         print('train_data_np.shape:', self.train_data_np.shape)
         print('val_data_np.shape:', self.val_data_np.shape)
         print('test_data_np.shape:', self.test_data_np.shape)
+
+        print('train_val_data_tensor.shape:', self.train_val_data_tensor.shape)
         print('train_data_tensor.shape:', self.train_data_tensor.shape)
         print('val_data_tensor.shape:', self.val_data_tensor.shape)
         print('test_data_tensor.shape:', self.test_data_tensor.shape)
+
+        print('train_val_x.shape:', self.train_val_x.shape)
+        print('train_val_y.shape:', self.train_val_y.shape)
         print('train_x.shape:', self.train_x.shape)
         print('train_y.shape:', self.train_y.shape)
         print('val_x.shape:', self.val_x.shape)
         print('val_y.shape:', self.val_y.shape)
+
 
     def print_dataloader_info(self, dataloader, title='Dataloader Info'):
         print(f'-------------{title} Dataloader Info-------------')
