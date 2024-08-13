@@ -5,9 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5aa3e3f6-0354-4059-85bb-cd5af9869e37" name="更改" comment="daily update">
+      <change afterPath="$PROJECT_DIR$/EXP4/Config_Data_Old.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EXP4/.ipynb_checkpoints/Untitled-checkpoint.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EXP4/包依赖测试.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/包依赖测试.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EXP4/AR_model.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/AR_model.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EXP4/Config_Data.py" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/Config_Data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EXP4/Train_val_test.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/Train_val_test.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EXP4/load_ar1_data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/load_ar1_data.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EXP4/load_iid_data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/load_iid_data.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +45,7 @@
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;F:/wwj/MScProject&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/Study in the UK/Project/codes/EXP4&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,

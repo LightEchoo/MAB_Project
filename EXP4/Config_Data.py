@@ -32,15 +32,23 @@ class GATConfig:
     num_heads: int = 8  # Number of attention heads
     num_gat_layers: int = 3  # Number of GAT layers
 
+
 @dataclass
 class GNNConfig:
     hidden_size: int = 32
     num_layers: int = 3
 
+
 @dataclass
 class Config:
     N: int = 10  # Number of nodes
+    T: int = 11000  # Total time steps
+
     T_train_val: int = 10000  # Training and validation time steps
+    train_ratio: float = 0.8  # Training ratio
+    T_train: int = 8000  # Training time steps
+    T_val: int = 2000  # Validation time steps
+
     T_test: int = 1000  # Test time steps
     data_type: str = 'ar1'  # 'iid' or 'ar1'
 
@@ -55,15 +63,15 @@ class Config:
     mix_precision: bool = True  # Mixed precision training
 
     # 早停的参数
-    patience_epochs: int=6  # 'patience_epochs' 个 epoch 没有提升，就停止训练
-    min_delta: float=1e-2  # 当监控指标的变化小于 min_delta 时，就视为没有提升
+    patience_epochs: int = 6  # 'patience_epochs' 个 epoch 没有提升，就停止训练
+    min_delta: float = 1e-2  # 当监控指标的变化小于 min_delta 时，就视为没有提升
 
     # 调度器的参数
-    mode: str='min'  # 'min' 表示监控指标的值越小越好，'max' 表示监控指标的值越大越好
-    factor: float=0.1  # 学习率调度器的缩放因子
-    patience_lr: int=2  # 'patience_lr' 个 epoch 没有提升，就缩放学习率
-    min_lr: float=1e-6  # 学习率的下限
-    threshold: float=1e-2  # 监控指标的变化小于 threshold 时，就视为没有提升
+    mode: str = 'min'  # 'min' 表示监控指标的值越小越好，'max' 表示监控指标的值越大越好
+    factor: float = 0.1  # 学习率调度器的缩放因子
+    patience_lr: int = 2  # 'patience_lr' 个 epoch 没有提升，就缩放学习率
+    min_lr: float = 1e-6  # 学习率的下限
+    threshold: float = 1e-2  # 监控指标的变化小于 threshold 时，就视为没有提升
 
     # 使用 default_factory 来实例化复杂类型
     dg_config: DataGenerateConfig = field(default_factory=DataGenerateConfig)
@@ -73,9 +81,8 @@ class Config:
     gnn_config: GNNConfig = field(default_factory=GNNConfig)
 
     def print_config_info(self):
-        print("Config settings:")
+        print('-----------------Config Info-----------------')
         self._recursive_print(vars(self))
-        print("-" * 50)
 
     def _recursive_print(self, config_dict, indent=0):
         for key, value in config_dict.items():
@@ -140,59 +147,115 @@ class DataGenerate:
         pd.DataFrame(self.load_ar1).to_csv('load_ar1_data.csv', index=False)
 
     def print_data_generate_info(self):
-        print('means_loads:', self.means_loads.shape)
-        print('load_iid:', self.load_iid.shape)
-        print('mean_iid:', self.mean_iid.shape)
-        print('load_ar1:', self.load_ar1.shape)
-        print('mean_ar1:', self.mean_ar1.shape)
-        print('edge_index:', self.edge_index.shape)
+        print('-----------------Data Generate Info-----------------')
+        print('means_loads.shape:', self.means_loads.shape)
+        print('load_iid.shape:', self.load_iid.shape)
+        print('mean_iid.shape:', self.mean_iid.shape)
+        print('load_ar1.shape:', self.load_ar1.shape)
+        print('mean_ar1.shape:', self.mean_ar1.shape)
 
 
-class DataManage:
+class TrainVaildManage:
     def __init__(self, config: Config):
-        self.config = config  # 配置
-        self.load_iid = pd.read_csv('load_iid_data.csv').values  # 加载iid数据, shape: (N, T), 10*11000
-        self.load_ar1 = pd.read_csv('load_ar1_data.csv').values  # 加载ar1数据, shape: (N, T), 10*11000
+        self.config = config
+        self.load_iid = pd.read_csv('load_iid_data.csv').values
+        self.load_ar1 = pd.read_csv('load_ar1_data.csv').values
 
         if self.config.data_type == 'iid':
-            self.data = self.load_iid
+            self.data_np = self.load_iid
         elif self.config.data_type == 'ar1':
-            self.data = self.load_ar1
+            self.data_np = self.load_ar1
 
-        self.train_val_data = self.data[:, :self.config.T_train_val]  # 训练集和验证集数据, shape: (N, T_train_val), 10*10000
-        self.test_data = self.data[:, self.config.T_train_val:]  # 测试集数据, shape: (N, T_test), 10*1000
+        self.data_tensor = torch.tensor(self.data_np, device=self.config.device, dtype=torch.float32)
 
-        # 获取训练集和验证集的数据
-        self.train_sets, self.val_sets = self._create_sequences()
+        # 从config中获取数据的时间步信息
+        self.T = self.config.T
+        self.T_train = self.config.T_train
+        self.T_val = self.config.T_val
+        self.train_ratio = self.config.train_ratio
+        self.T_train_val = self.config.T_train_val
+        self.T_test = self.config.T_test
 
-        # 创建数据集
-        self.train_val_dataset = TensorDataset(self.train_sets, self.val_sets)
-        self.dataloader = DataLoader(self.train_val_dataset, batch_size=self.config.batch_size, shuffle=True,
-                                     num_workers=self.config.num_workers)
+        # 划分np.array的训练集、验证集和测试集
+        self.train_val_data_np = self.data_np[:, :self.T_train_val]
+        self.train_data_np = self.data_np[:, :self.T_train]
+        self.val_data_np = self.data_np[:, self.T_train:self.T_train_val]
+        self.test_data_np = self.data_np[:, self.T_train_val:]
 
-        self.print_data_manage_info()  # 打印信息
-        self.print_dataloader_info()  # 打印dataloader信息
+        # 储存tensor的训练集、验证集和测试集
+        self.train_val_data_tensor = torch.tensor(self.train_val_data_np, device=self.config.device, dtype=torch.float32)
+        self.train_data_tensor = torch.tensor(self.train_data_np, device=self.config.device, dtype=torch.float32)
+        self.val_data_tensor = torch.tensor(self.val_data_np, device=self.config.device, dtype=torch.float32)
+        self.test_data_tensor = torch.tensor(self.test_data_np, device=self.config.device, dtype=torch.float32)
 
-        self.train_val_data = torch.tensor(self.train_val_data, device=self.config.device, dtype=torch.float32)
-        self.test_data = torch.tensor(self.test_data, device=self.config.device, dtype=torch.float32)
+        # 创建训练集和验证集的序列数据，用于训练和验证
+        self.train_x, self.train_y = self._create_sequences(self.train_data_np)
+        self.val_x, self.val_y = self._create_sequences(self.val_data_np)
 
-        self.edge_index = torch.tensor(np.array([(i, j) for i in range(self.config.N) for j in range(self.config.N)]).T,
-                                       dtype=torch.long)  # 默认全连接图
+        # 创建TensorDataset，用于创建DataLoader
+        self.train_dataset = TensorDataset(self.train_x, self.train_y)
+        self.val_dataset = TensorDataset(self.val_x, self.val_y)
 
-    def _create_sequences(self):
-        train_sets = []
-        val_sets = []
-        for i in range(self.config.T_train_val - self.config.seq_length):
-            # 循环次数不是T_train - seq_length + 1，因为训练集里并没有第10001个真实数据作为target。
-            # 最后一次生成的序列会在逐步更新的过程中使用，而不是在初始训练集中。
-            train = self.train_val_data[:, i: i + self.config.seq_length].T  # 提取每个时间步的序列
-            val = self.train_val_data[:, i + self.config.seq_length]  # 提取目标值
-            train_sets.append(train)
-            val_sets.append(val)
-        return torch.tensor(np.array(train_sets)), torch.tensor(np.array(val_sets))
+        # 创建数据加载器
+        self.train_dataloader = DataLoader(self.train_dataset, batch_size=self.config.batch_size, shuffle=True,
+                                           num_workers=self.config.num_workers)
+        self.val_dataloader = DataLoader(self.val_dataset, batch_size=self.config.batch_size, shuffle=False,
+                                         num_workers=self.config.num_workers)
 
-    # 绘制指定范围内的数据
-    def plot_range_data(self, data, start, end, title='Load Data'):
+        # 打印信息
+        self.print_train_valid_info()
+        self.print_dataloader_info(self.train_dataloader, title='Train')
+        self.print_dataloader_info(self.val_dataloader, title='Valid')
+
+        # 创建GNN的边索引
+        self.edge_index_tensor = torch.tensor(
+            np.array([(i, j) for i in range(self.config.N) for j in range(self.config.N)]).T,
+            dtype=torch.long)  # 默认全连接图
+
+    def _create_sequences(self, data):
+        x, y = [], []
+
+        # 循环次数不是T_train - seq_length + 1，因为训练集里并没有第10001个真实数据作为target。
+        # 最后一次生成的序列会在逐步更新的过程中使用，而不是在初始训练集中。
+        for i in range(data.shape[1] - self.config.seq_length):
+            x.append(data[:, i: i + self.config.seq_length].T)
+            y.append(data[:, i + self.config.seq_length])
+        return torch.tensor(np.array(x)), torch.tensor(np.array(y))
+
+    def print_train_valid_info(self):
+        print('-----------------Train and Valid Info-----------------')
+        print('load_iid.shape:', self.load_iid.shape)
+        print('load_ar1.shape:', self.load_ar1.shape)
+        print('data_np.shape:', self.data_np.shape)
+        print('data_tensor.shape:', self.data_tensor.shape)
+        print('T:', self.T)
+        print('T_train:', self.T_train)
+        print('T_val:', self.T_val)
+        print('train_ratio:', self.train_ratio)
+        print('T_train_val:', self.T_train_val)
+        print('T_test:', self.T_test)
+        print('train_data_np.shape:', self.train_data_np.shape)
+        print('val_data_np.shape:', self.val_data_np.shape)
+        print('test_data_np.shape:', self.test_data_np.shape)
+        print('train_data_tensor.shape:', self.train_data_tensor.shape)
+        print('val_data_tensor.shape:', self.val_data_tensor.shape)
+        print('test_data_tensor.shape:', self.test_data_tensor.shape)
+        print('train_x.shape:', self.train_x.shape)
+        print('train_y.shape:', self.train_y.shape)
+        print('val_x.shape:', self.val_x.shape)
+        print('val_y.shape:', self.val_y.shape)
+
+    def print_dataloader_info(self, dataloader, title='Dataloader Info'):
+        print(f'-------------{title} Dataloader Info-------------')
+        for i, (x, y) in enumerate(dataloader):
+            if i % 30 == 0 or i == len(dataloader) - 1:
+                print(f'{title} i: {i:>3}, x: {x.shape}, y: {y.shape}')
+
+    def plot_range_data(self, data, start=None, end=None, title='Load Data'):
+        start = 0 if start is None else start  # 默认从0开始
+        end = data.shape[1] if end is None else end  # 默认到最后结束
+
+        # 绘制指定范围内的数据
         time_steps = np.arange(start, end)
 
         plt.figure(figsize=(12, 6))
@@ -204,79 +267,116 @@ class DataManage:
         plt.legend()
         plt.grid(True)
 
-        # Adjust layout
         plt.tight_layout()
         plt.show()
 
-    def print_data_manage_info(self):
-        print('load_iid.shape:', self.load_iid.shape)
-        print('load_iid.type:', type(self.load_iid))
-        print('load_ar1.shape:', self.load_ar1.shape)
-        print('load_ar1.type:', type(self.load_ar1))
-        print('data.shape:', self.data.shape)
-        print('data.type:', type(self.data))
-        print('train_val_data.shape:', self.train_val_data.shape)
-        print('train_val_data.type:', type(self.train_val_data))
-        print('test_data.shape:', self.test_data.shape)
-        print('test_data.type:', type(self.test_data))
-        print('train_sets.shape:', self.train_sets.shape)
-        print('train_sets.type:', type(self.train_sets))
-        print('val_sets.shape:', self.val_sets.shape)
-        print('val_sets.type:', type(self.val_sets))
-        print('len(train_val_dataset):', len(self.train_val_dataset))
-        print('len(dataloader):', len(self.dataloader))
 
-    def print_dataloader_info(self):
-        for i, (train, val) in enumerate(self.dataloader):
-            if i % 30 == 0 or i == len(self.dataloader) - 1:  # 每30次打印一次，确保最后一次打印
-                print(f'i: {i:>3}, train: {train.shape}, val: {val.shape}')
+def Process(RE_GENERATE_DATA=False, **kwargs):
+    RE_GENERATE_DATA = RE_GENERATE_DATA  # 是否重新生成数据
 
-
-if __name__ == '__main__':
-    RE_GENERATE_DATA = False  # 是否重新生成数据
-
-    device = 'cuda' if torch.cuda.is_available() else 'cpu'
-    # device = 'cpu'
+    device = kwargs.get('device', 'cuda' if torch.cuda.is_available() else 'cpu')
 
     # 默认配置
-    config = Config(
-        N=10,
-        T_train_val=10000,
-        T_test=1000,
-        data_type='ar1',
+    default_config = {
+        'N': 10,
+        'T': 11000,
+        'T_train_val': 10000,
+        'T_test': 1000,
+        'train_ratio': 0.8,
+        'T_train': 8000,
+        'T_val': 2000,
+        'data_type': 'ar1',
 
-        batch_size=64,
-        seq_length=20,
-        input_size=10,
-        output_size=10,
-        learning_rate=0.001,
-        num_epochs=100,
-        num_workers=24,
-        device=device,
-        mix_precision=True if device == 'cuda' else False,
+        'batch_size': 64,
+        'seq_length': 20,
+        'input_size': 10,
+        'output_size': 10,
+        'learning_rate': 0.001,
+        'num_epochs': 100,
+        'num_workers': 24,
+        'device': 'cuda' if torch.cuda.is_available() else 'cpu',
+        'mix_precision': True if device == 'cuda' else False,
 
-        patience_epochs=6,
-        min_delta=1e-2,
+        'patience_epochs': 6,
+        'min_delta': 1e-2,
 
-        mode='min',
-        factor=0.1,
-        patience_lr=2,
-        min_lr=1e-6,
-        threshold=1e-2,
+        'mode': 'min',
+        'factor': 0.1,
+        'patience_lr': 2,
+        'min_lr': 1e-6,
+        'threshold': 1e-2,
 
-        dg_config=DataGenerateConfig(mean_load=50.0, var_load=10.0, iid_var=1.0, theta=0.9),
-        ar_config=ARConfig(order=5),
-        lstm_config=LSTMConfig(hidden_size=64, num_layers=4),
-        gat_config=GATConfig(hidden_size=32, num_heads=8, num_gat_layers=3),
-        gnn_config=GNNConfig(hidden_size=32, num_layers=3)
+        'dg_config': DataGenerateConfig(mean_load=50.0, var_load=10.0, iid_var=1.0, theta=0.9),
+        'ar_config': ARConfig(order=5),
+        'lstm_config': LSTMConfig(hidden_size=64, num_layers=4),
+        'gat_config': GATConfig(hidden_size=32, num_heads=8, num_gat_layers=3),
+        'gnn_config': GNNConfig(hidden_size=32, num_layers=3)
+    }
 
-    )
+    # 更新默认配置
+    default_config.update(kwargs)
+
+    # 使用更新后的配置创建Config对象
+    config = Config(**default_config)
 
     config.print_config_info()
 
     if RE_GENERATE_DATA:
         data_generate = DataGenerate(config)
 
-    data_manage = DataManage(config)
+    data_train_val_manage = TrainVaildManage(config)
 
-# %%
+    data_train_val_manage.plot_range_data(data_train_val_manage.data_np[:3, :], title='Data')
+    # data_train_val_manage.plot_range_data(data_train_val_manage.train_data_np[:3, :], title='Train Data')
+    # data_train_val_manage.plot_range_data(data_train_val_manage.val_data_np[:3, :], title='Valid Data')
+    # data_train_val_manage.plot_range_data(data_train_val_manage.test_data_np[:3, :], title='Test Data')
+
+    # data_manage = DataManage(config)
+    #
+    # data_manage.plot_range_data(data_manage.train_val_data, 0, 1000, title='Train and Valid Data')
+    # data_manage.plot_range_data(data_manage.test_data, 0, 1000, title='Test Data')
+    if RE_GENERATE_DATA:
+        return config, data_generate, data_train_val_manage
+    else:
+        return config, data_train_val_manage
+
+
+if __name__ == '__main__':
+    current_config = {
+        'N': 10,
+        'T': 11000,
+        'T_train_val': 10000,
+        'T_test': 1000,
+        'train_ratio': 0.8,
+        'T_train': 8000,
+        'T_val': 2000,
+        'data_type': 'ar1',
+
+        'batch_size': 64,
+        'seq_length': 20,
+        'input_size': 10,
+        'output_size': 10,
+        'learning_rate': 0.001,
+        'num_epochs': 100,
+        'num_workers': 24,
+        'device': 'cuda',
+
+        'patience_epochs': 6,
+        'min_delta': 1e-2,
+
+        'mode': 'min',
+        'factor': 0.1,
+        'patience_lr': 2,
+        'min_lr': 1e-6,
+        'threshold': 1e-2,
+
+        'dg_config': DataGenerateConfig(mean_load=50.0, var_load=10.0, iid_var=1.0, theta=0.9),
+        'ar_config': ARConfig(order=5),
+        'lstm_config': LSTMConfig(hidden_size=64, num_layers=4),
+        'gat_config': GATConfig(hidden_size=32, num_heads=8, num_gat_layers=3),
+        'gnn_config': GNNConfig(hidden_size=32, num_layers=3)
+    }
+    # config, data_generate, data_train_val_manage = main(RE_GENERATE_DATA=True, **current_config)
+
+    config, data_manage = Process(RE_GENERATE_DATA=False, **current_config)
+#%%
