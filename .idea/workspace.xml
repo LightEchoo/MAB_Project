@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5aa3e3f6-0354-4059-85bb-cd5af9869e37" name="更改" comment="update train_val model">
+    <list default="true" id="5aa3e3f6-0354-4059-85bb-cd5af9869e37" name="更改" comment="update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EXP4/AR_model.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/AR_model.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EXP4/ModelExpert.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/ModelExpert.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -128,6 +129,7 @@
     <MESSAGE value="daily update" />
     <MESSAGE value="update Config_Data.py, using x, y split" />
     <MESSAGE value="update train_val model" />
-    <option name="LAST_COMMIT_MESSAGE" value="update train_val model" />
+    <MESSAGE value="update" />
+    <option name="LAST_COMMIT_MESSAGE" value="update" />
   </component>
 </project>
