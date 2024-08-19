@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="5aa3e3f6-0354-4059-85bb-cd5af9869e37" name="更改" comment="update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EXP4/AR_model.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/AR_model.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EXP4/ModelExpert.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/EXP4/ModelExpert.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +23,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;LightEchoo&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/LightEchoo/MAB_Project.git&quot;,
+    &quot;accountId&quot;: &quot;a0814db6-9d93-42b8-9c6e-71a5f54d3392&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -46,7 +56,7 @@
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.notebooks.jupyter.connections.configuration.JupyterServerConfigurable&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.sync&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -92,7 +102,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-df623cec81eb-c6172f9078bd-com.jetbrains.pycharm.ds.sharedIndexes.bundled-DS-233.15026.16" />
+        <option value="bundled-python-sdk-54d380b879e2-1e58bffe31b7-com.jetbrains.pycharm.ds.sharedIndexes.bundled-DS-242.20224.354" />
       </set>
     </attachedChunks>
   </component>
